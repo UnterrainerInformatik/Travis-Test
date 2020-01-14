@@ -1,0 +1,29 @@
+# VARIABLES NEEDED
+# 
+# SOLUTION_NAME     The name without file-ending
+# NUGET_API_KEY     Your key from nuget.org
+# PROJECT_FILENAME  The name without file-ending
+# PROJECT_PATH      The path to your project (starting at git-repo-root; which is /)
+# DEPLOY_BUILD      Which build you want to pack and push to nuget('Debug' or 'Release')
+#
+# git/depth: false is needed for minver
+
+language: csharp
+solution: $SOLUTION_NAME.sln
+git:
+  depth: false
+install:
+  - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
+  - EXPORT TRAVIS=travis/.NET
+  - source $TRAVIS/scr/install.sh
+before_script:
+  - source $TRAVIS/src/before_script.sh
+script:
+  - source $TRAVIS/scr/script.sh
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: 
+    - source $TRAVIS/.NET/scr/deploy.sh
+  on:
+    branch: master
