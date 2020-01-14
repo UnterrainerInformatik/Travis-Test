@@ -17,17 +17,18 @@ solution: $SOLUTION_NAME.sln
 git:
   depth: false
 install:
-  - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
-  - export TRAVIS=travis/.NET
-  - source $TRAVIS/src/install.sh
+  - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git /travis
+  - source /travis/functions.sh
+  - tr_setProjectSubdir .NET
+  - source $TRAVIS/install.sh
 before_script:
-  - source $TRAVIS/src/before_script.sh
+  - source $TRAVIS/before_script.sh
 script:
-  - source $TRAVIS/src/script.sh
+  - source $TRAVIS/script.sh
 deploy:
   skip_cleanup: true
   provider: script
   script: 
-    - source $TRAVIS/.NET/src/deploy.sh
+    - source $TRAVIS/deploy.sh
   on:
     branch: master
