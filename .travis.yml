@@ -17,8 +17,8 @@ solution: $SOLUTION_NAME.sln
 git:
   depth: false
 install:
-  - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git /travis
-  - source /travis/functions.sh
+  - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
+  - source ./travis/functions.sh
   - tr_setProjectSubdir .NET
   - source $TRAVIS/install.sh
 before_script:
