@@ -19,15 +19,15 @@ git:
 install:
   - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
   - export TRAVIS=travis/.NET
-  - source $TRAVIS/scr/install.sh
+  - source $TRAVIS/src/install.sh
 before_script:
   - source $TRAVIS/src/before_script.sh
 script:
-  - source $TRAVIS/scr/script.sh
+  - source $TRAVIS/src/script.sh
 deploy:
   skip_cleanup: true
   provider: script
   script: 
-    - source $TRAVIS/.NET/scr/deploy.sh
+    - source $TRAVIS/.NET/src/deploy.sh
   on:
     branch: master
