@@ -1,6 +1,10 @@
 # VARIABLES NEEDED
 # 
 # SOLUTION_NAME     The name without file-ending
+# DEPLOY            Whether or not to deploy the result as a nuget-package (true if set)
+#                   If you don't want to deploy, unset it (or set it to 'false')
+#
+### Deploy
 # NUGET_API_KEY     Your key from nuget.org
 # PROJECT_FILENAME  The name without file-ending
 # PROJECT_PATH      The path to your project (starting at git-repo-root; which is /)
@@ -14,7 +18,7 @@ git:
   depth: false
 install:
   - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
-  - EXPORT TRAVIS="travis/.NET"
+  - export TRAVIS=travis/.NET
   - source $TRAVIS/scr/install.sh
 before_script:
   - source $TRAVIS/src/before_script.sh
