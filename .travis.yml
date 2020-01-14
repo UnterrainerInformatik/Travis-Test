@@ -14,7 +14,7 @@ git:
   depth: false
 install:
   - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git ./travis
-  - EXPORT TRAVIS=travis/.NET
+  - EXPORT TRAVIS="travis/.NET"
   - source $TRAVIS/scr/install.sh
 before_script:
   - source $TRAVIS/src/before_script.sh
