@@ -22,8 +22,8 @@ git:
   depth: false
 install:
   - git clone https://github.com/UnterrainerInformatik/Travis-Scripts.git travis
-  - export PROJECT_SUBDIR=.NET
   - source travis/functions.sh
+  - tr_setProjectSubdir .NET
   - source $TRAVIS/install.sh
 before_script:
   - source $TRAVIS/before_script.sh
@@ -32,10 +32,7 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  before_deploy:
-    - export PROJECT_SUBDIR=.NET
-    - source travis/functions.sh
   script: 
-    - source $TRAVIS/deploy.sh
+    - ./$TRAVIS/deploy.sh
   on:
     branch: master
