@@ -33,6 +33,7 @@ deploy:
   skip_cleanup: true
   provider: script
   script: 
+    - source travis/functions.sh
     - ./$TRAVIS/deploy.sh
   on:
     branch: master
