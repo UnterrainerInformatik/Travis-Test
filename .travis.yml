@@ -58,7 +58,7 @@ deploy:
     overwrite: true
     api_key:
         secure: $GITHUB_API_KEY
-    file: "FILE TO UPLOAD"
+    file: $DEPLOY_BUILD.$VERSION.zip
     on:
       tags: true
       branch: master
