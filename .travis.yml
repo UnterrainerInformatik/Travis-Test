@@ -14,10 +14,22 @@
 # NUGET_PROJECT_FILENAME  The name without file-ending
 # NUGET_PROJECT_PATH      The path to your project (starting at git-repo-root; which is /)
 #
+# GITHUB_API_KEY          Your key from your GitHub repository (to push the release-zip),
+#                         if you want it to be published, else unset it (or set it to 'false')
+#                         Has to be a personal API-key (Your GitHub-user-image -> Settings ->
+#                         Developer settings -> Personal access tokens). Has to have the 'repo'
+#                         permission (top level).
+# BUILD_TARGET            The directory your build is saved in (to get it zipped for a
+#                         GitHub release)
+#
 ####################
 ### GENERAL INFO ###
 ####################
-# git/depth: false is needed for minver
+# - git/depth: false is needed for minver
+# - The 'deploy' step in Travis isn't the same process as the rest. So you have to re-source
+#   the functions into that process. More than that it isn't a full sh process like with the
+#   script-phase. So you cannot even source from there directly. That's why the source
+#   command is IN the deploy.sh script.
 
 language: csharp
 solution: $SOLUTION_NAME.sln
@@ -32,10 +44,21 @@ before_script:
   - source $TRAVIS/before_script.sh
 script:
   - source $TRAVIS/script.sh
+
+before_deploy:
+  - zip -r $DEPLOY_BUILD.$VERSION.zip $BUILD_TARGET/*
 deploy:
-  skip_cleanup: true
-  provider: script
-  script: 
-    - ./$TRAVIS/deploy.sh
-  on:
-    branch: master
+  - provider: script
+    skip_cleanup: true
+    script: ./$TRAVIS/deploy.sh
+    on:
+      branch: master
+  - provider: releases
+    skip_cleanup: true
+    overwrite: true
+    api_key:
+        secure: $GITHUB_API_KEY
+    file: "FILE TO UPLOAD"
+    on:
+      tags: true
+      branch: master
