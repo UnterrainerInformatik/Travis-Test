@@ -46,9 +46,7 @@ script:
 
 before_deploy:
   - mkdir -p ziptemp/$SOLUTION_NAME
-  - cd $BUILD_TARGET
-  - cp -a * ziptemp/$SOLUTION_NAME
-  - cd -
+  - cp -a $BUILD_TARGET/* ziptemp/$SOLUTION_NAME
   - cd ziptemp
   - zip -r $DEPLOY_BUILD.$VERSION.zip $SOLUTION_NAME/*
   - cd -
