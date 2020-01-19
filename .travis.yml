@@ -14,8 +14,7 @@
 # NUGET_PROJECT_FILENAME  The name without file-ending
 # NUGET_PROJECT_PATH      The path to your project (starting at git-repo-root; which is /)
 #
-# GITHUB_API_KEY          Your key from your GitHub repository (to push the release-zip),
-#                         if you want it to be published, else unset it (or set it to 'false')
+# GITHUB_API_KEY          Your key from your GitHub repository (to push the release-zip).
 #                         Has to be a personal API-key (Your GitHub-user-image -> Settings ->
 #                         Developer settings -> Personal access tokens). Has to have the 'repo'
 #                         permission (top level).
@@ -46,7 +45,14 @@ script:
   - source $TRAVIS/script.sh
 
 before_deploy:
-  - zip -r $DEPLOY_BUILD.$VERSION.zip $BUILD_TARGET/*
+  - mkdir -p ziptemp/$SOLUTION_NAME
+  - cd $BUILD_TARGET
+  - cp -a * ziptemp/$SOLUTION_NAME
+  - cd -
+  - cd ziptemp
+  - zip -r $DEPLOY_BUILD.$VERSION.zip $SOLUTION_NAME/*
+  - cd -
+  - rm -rf ziptemp
 deploy:
   - provider: script
     skip_cleanup: true
