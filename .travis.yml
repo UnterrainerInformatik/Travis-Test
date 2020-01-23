@@ -20,6 +20,12 @@
 #                         permission (top level).
 # BUILD_TARGET            The directory your build is saved in (to get it zipped for a
 #                         GitHub release)
+# BUILD_CORE              If set the version it is set to (2.1.502, latest, ...) will be part
+#                         of the build matrix. Otherwise latest will be used, but the build will
+#                         be skipped immediately after start
+# BUILD_MONO              If set the version it is set to (3.10.0, latest, ...) will be part
+#                         of the build matrix. Otherwise latest will be used, but the build will
+#                         be skipped immediately after start
 #
 ####################
 ### GENERAL INFO ###
@@ -32,6 +38,14 @@
 
 language: csharp
 solution: $SOLUTION_NAME.sln
+jobs:
+  include:
+    - dotnet: [[ ! -z "$BUILD_CORE" ]] && echo "$BUILD_CORE" || echo "latest"
+      mono: none
+      env: RT_TYPE=core
+    - mono: [[ ! -z "$BUILD_MONO" ]] && echo "$BUILD_MONO" || echo "latest"
+      dotnet: none
+      env: RT_TYPE=mono
 git:
   depth: false
 install:
